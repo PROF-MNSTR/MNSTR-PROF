@@ -1,0 +1,46 @@
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.enums import TA_CENTER
+
+# إعداد ملف PDF جديد مع العنوان
+pdf_file2 = "/mnt/data/formations_fight_coach.pdf"
+doc = SimpleDocTemplate(pdf_file2, pagesize=A4)
+styles = getSampleStyleSheet()
+
+# ستايل العنوان الرئيسي
+title_style = ParagraphStyle(
+    "TitleStyle",
+    parent=styles["Heading1"],
+    alignment=TA_CENTER,
+    fontSize=18,
+    leading=22,
+    spaceAfter=20
+)
+
+story = []
+
+# العنوان الرئيسي
+story.append(Paragraph("📘 Formations de Fight – Coach Prof", title_style))
+story.append(Spacer(1, 12))
+
+# نفس المعطيات السابقة
+formations = [
+    ("Rush Formation", "الهجوم المباشر: كامل الفريق يطلعو على الخصم دفعة وحدة. فعّالة مليح كي تكون عندكم قوة سلاح وصحة كاملة."),
+    ("Split Formation", "التوزيع: الفريق يتقسم 2-2 ولا 3-1 باش يفتح زوايا. قوية ضد الخصوم المتحصنين."),
+    ("Crossfire Formation", "النيران المتقاطعة: لاعبين يتمركزو بزوايا مختلفة باش الخصم يتضرب من جهتين في نفس الوقت."),
+    ("Bait & Trap Formation", "الطُعم والفخ: واحد يبان قدام كطُعم، والباقي يغطيو عليه من الخلف. مثالية لصيد الخصوم المتهورين."),
+    ("Surround Formation", "التطويق: الفريق يحيط بالخصم من جميع الجهات باش يتشتت ومايعرفش يركز على جهة وحدة."),
+    ("Leader & Support Formation", "قائد + دعم: واحد يدخل أول (Entry Fragger) والباقي يغطيوه بـ AR, Sniper أو Healer."),
+    ("Snake / Stealth Formation", "التسلل: الفريق يزحف ويتقدّم بهدوء خاصة في آخر الزون باش ما يتكشفش.")
+]
+
+# إضافة الصور والشرح
+for (title, desc), img in zip(formations, img_paths):
+    story.append(Paragraph(f"<b>{title}</b>", styles["Heading3"]))
+    story.append(Image(img, width=250, height=250))
+    story.append(Paragraph(desc, styles["Normal"]))
+    story.append(Spacer(1,20))
+
+doc.build(story)
+pdf_file2
